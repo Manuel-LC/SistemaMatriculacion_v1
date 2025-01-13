@@ -1,22 +1,18 @@
 package org.iesalandalus.programacion.matriculacion;
 
-import org.iesalandalus.programacion.matriculacion.dominio.Alumno;
-import org.iesalandalus.programacion.matriculacion.dominio.Asignatura;
-import org.iesalandalus.programacion.matriculacion.dominio.Matricula;
-import org.iesalandalus.programacion.matriculacion.negocio.*;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.Alumno;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.Asignatura;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.Matricula;
+import org.iesalandalus.programacion.matriculacion.modelo.negocio.*;
 import org.iesalandalus.programacion.matriculacion.vista.*;
-import org.iesalandalus.programacion.matriculacion.dominio.CicloFormativo;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.CicloFormativo;
 import org.iesalandalus.programacion.utilidades.Entrada;
 
 import javax.naming.OperationNotSupportedException;
 import java.time.LocalDate;
 
 public class MainApp {
-    public static final int CAPACIDAD=3;
-    private static final Alumnos alumnos = new Alumnos(CAPACIDAD);
-    private static final Asignaturas asignaturas = new Asignaturas(CAPACIDAD);
-    private static final CiclosFormativos ciclosFormativos = new CiclosFormativos(CAPACIDAD);
-    private static final Matriculas matriculas = new Matriculas(CAPACIDAD);
+
 
     public static void main(String[] args) {
         Opcion opcion = Opcion.SALIR;

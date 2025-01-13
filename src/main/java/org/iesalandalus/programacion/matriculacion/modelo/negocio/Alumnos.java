@@ -1,6 +1,6 @@
-package org.iesalandalus.programacion.matriculacion.negocio;
+package org.iesalandalus.programacion.matriculacion.modelo.negocio;
 
-import org.iesalandalus.programacion.matriculacion.dominio.Alumno;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.Alumno;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -20,7 +20,7 @@ public class Alumnos {
         coleccionAlumnos = new Alumno[capacidad];
     }
 
-    public static Alumno[] get() {
+    public Alumno[] get() {
         return copiaProfundaAlumnos();
     }
 
@@ -44,7 +44,7 @@ public class Alumnos {
         return capacidad;
     }
 
-    public static void insertar(Alumno alumno) throws OperationNotSupportedException {
+    public void insertar(Alumno alumno) throws OperationNotSupportedException {
         if (alumno == null) {
             throw new NullPointerException("ERROR: No se puede insertar un alumno nulo.");
         }
@@ -55,7 +55,7 @@ public class Alumnos {
         int i = buscarIndice(alumno);
 
         if (i != -1) {
-            coleccionAlumnos[i] = alumno;
+            coleccionAlumnos[i] = new Alumno(alumno);
             tamano++;
         } else {
             throw new OperationNotSupportedException("ERROR: No se aceptan más alumnos.");
@@ -84,7 +84,7 @@ public class Alumnos {
         return indice > capacidad;
     }
 
-    public static Alumno buscar(Alumno alumno) {
+    public Alumno buscar(Alumno alumno) {
         int i;
         boolean encontrado = false;
 
@@ -102,7 +102,7 @@ public class Alumnos {
         }
     }
 
-    public static void borrar(Alumno alumno) throws OperationNotSupportedException {
+    public void borrar(Alumno alumno) throws OperationNotSupportedException {
         if (alumno == null) {
             throw new NullPointerException("ERROR: No se puede borrar un alumno nulo.");
         }

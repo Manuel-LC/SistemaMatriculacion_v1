@@ -1,10 +1,9 @@
-package org.iesalandalus.programacion.matriculacion.negocio;
+package org.iesalandalus.programacion.matriculacion.modelo.negocio;
 
-
-import org.iesalandalus.programacion.matriculacion.dominio.Alumno;
-import org.iesalandalus.programacion.matriculacion.dominio.Asignatura;
-import org.iesalandalus.programacion.matriculacion.dominio.CicloFormativo;
-import org.iesalandalus.programacion.matriculacion.dominio.Matricula;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.Alumno;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.Asignatura;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.CicloFormativo;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.Matricula;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -24,7 +23,7 @@ public class Matriculas {
         coleccionMatriculas = new Matricula[capacidad];
     }
 
-    public Matricula[] get() throws OperationNotSupportedException {
+    public Matricula[] get() {
         return copiaProfundaMatriculas();
     }
 
@@ -48,7 +47,7 @@ public class Matriculas {
         return capacidad;
     }
 
-    public static void insertar(Matricula matricula) throws OperationNotSupportedException {
+    public void insertar(Matricula matricula) throws OperationNotSupportedException {
         if (matricula == null) {
             throw new NullPointerException("ERROR: No se puede insertar una matrícula nula.");
         }
@@ -59,7 +58,7 @@ public class Matriculas {
         int i = buscarIndice(matricula);
 
         if (i != -1) {
-            coleccionMatriculas[i] = matricula;
+            coleccionMatriculas[i] = new Matricula(matricula);
             tamano++;
         } else {
             throw new OperationNotSupportedException("ERROR: No se aceptan más matrículas.");
@@ -88,7 +87,7 @@ public class Matriculas {
         return indice >= capacidad;
     }
 
-    public static Matricula buscar(Matricula matricula) {
+    public Matricula buscar(Matricula matricula) {
         int i;
         boolean encontrado = false;
 
@@ -106,7 +105,7 @@ public class Matriculas {
         }
     }
 
-    public static void borrar(Matricula matricula) throws OperationNotSupportedException {
+    public void borrar(Matricula matricula) throws OperationNotSupportedException {
         if (matricula == null) {
             throw new NullPointerException("ERROR: No se puede borrar una matrícula nula.");
         }
@@ -129,7 +128,7 @@ public class Matriculas {
         coleccionMatriculas[i] = null;
     }
 
-    public Matricula[] get(Alumno alumno) throws OperationNotSupportedException {
+    public Matricula[] get(Alumno alumno) {
         Matricula[] coleccionMatriculasAlumno = new Matricula[capacidad];
         int indice = 0;
 
@@ -141,7 +140,7 @@ public class Matriculas {
         return coleccionMatriculasAlumno;
     }
 
-    public Matricula[] get(String cursoAcademico) throws OperationNotSupportedException {
+    public Matricula[] get(String cursoAcademico) {
         Matricula[] coleccionMatriculasCurso = new Matricula[capacidad];
         int indice = 0;
 
@@ -153,7 +152,7 @@ public class Matriculas {
         return coleccionMatriculasCurso;
     }
 
-    public Matricula[] get(CicloFormativo cicloFormativo) throws OperationNotSupportedException {
+    public Matricula[] get(CicloFormativo cicloFormativo) {
         Matricula[] coleccionMatriculasCiclo = new Matricula[capacidad];
         int indice = 0;
 

@@ -1,4 +1,7 @@
-package org.iesalandalus.programacion.matriculacion.dominio;
+package org.iesalandalus.programacion.matriculacion.modelo.dominio;
+
+import org.iesalandalus.programacion.matriculacion.dominio.Curso;
+import org.iesalandalus.programacion.matriculacion.dominio.EspecialidadProfesorado;
 
 import java.util.Objects;
 

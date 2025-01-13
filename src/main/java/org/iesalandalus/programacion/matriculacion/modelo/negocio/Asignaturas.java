@@ -1,6 +1,6 @@
-package org.iesalandalus.programacion.matriculacion.negocio;
+package org.iesalandalus.programacion.matriculacion.modelo.negocio;
 
-import org.iesalandalus.programacion.matriculacion.dominio.Asignatura;
+import org.iesalandalus.programacion.matriculacion.modelo.dominio.Asignatura;
 
 import javax.naming.OperationNotSupportedException;
 
@@ -20,7 +20,7 @@ public class Asignaturas {
         coleccionAsignaturas = new Asignatura[capacidad];
     }
 
-    public static Asignatura[] get() {
+    public Asignatura[] get() {
         return copiaProfundaAsignaturas();
     }
 
@@ -44,7 +44,7 @@ public class Asignaturas {
         return capacidad;
     }
 
-    public static void insertar(Asignatura asignatura) throws OperationNotSupportedException {
+    public void insertar(Asignatura asignatura) throws OperationNotSupportedException {
         if (asignatura == null) {
             throw new NullPointerException("ERROR: No se puede insertar una asignatura nula.");
         }
@@ -55,7 +55,7 @@ public class Asignaturas {
         int i = buscarIndice(asignatura);
 
         if (i != -1) {
-            coleccionAsignaturas[i] = asignatura;
+            coleccionAsignaturas[i] = new Asignatura(asignatura);
             tamano++;
         } else {
             throw new OperationNotSupportedException("ERROR: No se aceptan más asignaturas.");
@@ -84,7 +84,7 @@ public class Asignaturas {
         return indice >= capacidad;
     }
 
-    public static Asignatura buscar(Asignatura cicloFormativo) {
+    public Asignatura buscar(Asignatura cicloFormativo) {
         int i;
         boolean encontrado = false;
 
@@ -102,7 +102,7 @@ public class Asignaturas {
         }
     }
 
-    public static void borrar(Asignatura asignatura) throws OperationNotSupportedException {
+    public void borrar(Asignatura asignatura) throws OperationNotSupportedException {
         if (asignatura == null) {
             throw new NullPointerException("ERROR: No se puede borrar una asignatura nula.");
         }
