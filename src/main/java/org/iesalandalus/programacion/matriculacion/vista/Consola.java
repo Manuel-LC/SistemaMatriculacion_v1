@@ -19,6 +19,10 @@ public class Consola {
 
     // Mostrar menú basado en las opciones del enumerado Opcion
     public static void mostrarMenu() {
+        System.out.println();
+        System.out.println("===============================================================================================");
+        System.out.println("Sistema de matriculación del IES Al-Andalus");
+        System.out.println("===============================================================================================");
         for (Opcion opcion : Opcion.values()) {
             System.out.println(opcion);
         }
@@ -54,7 +58,6 @@ public class Consola {
 
         System.out.print("Introduce la fecha de nacimiento del alumno: ");
         String fecha = Entrada.cadena();
-        System.out.println();
 
         fechaNacimiento = LocalDate.parse(fecha, formatter);
 
@@ -126,11 +129,9 @@ public class Consola {
     }
 
     // Mostrar ciclos formativos
-    public static void mostrarCiclosFormativos(CiclosFormativos ciclosFormativos) {
-        CicloFormativo[] listaCiclos = ciclosFormativos.get();
-
+    public static void mostrarCiclosFormativos(CicloFormativo[] ciclosFormativos) {
         System.out.println("Lista de ciclos formativos disponibles:");
-        for (CicloFormativo cicloFormativo : listaCiclos) {
+        for (CicloFormativo cicloFormativo : ciclosFormativos) {
             if (cicloFormativo != null) {
                 System.out.println(cicloFormativo);
             }
@@ -180,7 +181,7 @@ public class Consola {
     }
 
     // Leer una asignatura
-    public static Asignatura leerAsignatura() {
+    public static Asignatura leerAsignatura(CicloFormativo cicloFormativo) {
         System.out.print("Introduce el código de la asignatura (4 dígitos): ");
         String codigo = Entrada.cadena();
         System.out.print("Introduce el nombre de la asignatura: ");
@@ -192,8 +193,6 @@ public class Consola {
         Curso curso = leerCurso();
         EspecialidadProfesorado especialidadProfesorado = leerEspecialidadProfesorado();
 
-        CicloFormativo cicloFormativo = getCicloFormativoPorCodigo();
-        cicloFormativo = CiclosFormativos.buscar(cicloFormativo);
         System.out.println();
 
         return new Asignatura(codigo, nombre, horasAnuales, curso, horasDesdoble, especialidadProfesorado, cicloFormativo);
@@ -208,11 +207,9 @@ public class Consola {
     }
 
     // Mostrar asignaturas
-    private static void mostrarAsignaturas(Asignaturas asignaturas) {
-        Asignatura[] listaAsignaturas = asignaturas.get();
-
+    private static void mostrarAsignaturas(Asignatura[] asignaturas) {
         System.out.println("Lista de asignaturas disponibles:");
-        for (Asignatura asignatura : listaAsignaturas) {
+        for (Asignatura asignatura : asignaturas) {
             if (asignatura != null) {
                 System.out.println(asignatura);
             }
@@ -220,7 +217,7 @@ public class Consola {
     }
 
     // Comprobar si la asignatura ya está matriculada
-    private static boolean asignaturaYaMatriculada(Asignatura[] asignaturasMatricula, Asignatura asignatura) {
+    static boolean asignaturaYaMatriculada(Asignatura[] asignaturasMatricula, Asignatura asignatura) {
         boolean encontrada = false;
 
         for (Asignatura asignaturaMatriculada : asignaturasMatricula) {
@@ -233,18 +230,20 @@ public class Consola {
     }
 
     // Leer una matrícula
-    public static Matricula leerMatricula(Alumnos alumnos, Asignaturas asignaturas) throws OperationNotSupportedException {
+    public static Matricula leerMatricula(Alumno alumno, Asignatura[] asignaturas) throws OperationNotSupportedException {
         System.out.print("Introduce el identificador de la matrícula: ");
         int idMatricula = Entrada.entero();
         System.out.print("Introduce el curso académico: ");
         String cursoAcademico = Entrada.cadena();
         LocalDate fechaMatriculacion = leerFecha("Introduce la fecha de matriculación");
+        System.out.println();
 
-        Alumno alumno = getAlumnoPorDni();
-        alumno = Alumnos.buscar(alumno);
+        return new Matricula(idMatricula, cursoAcademico, fechaMatriculacion, alumno, asignaturas);
+    }
 
+    public static Asignatura[] elegirAsignaturasMatricula(Asignatura[] asignaturas) throws OperationNotSupportedException {
         // Añadir asignaturas a la matrícula
-        Asignatura[] asignaturasMatricula = new Asignatura[asignaturas.getCapacidad()];
+        Asignatura[] asignaturasMatricula = new Asignatura[asignaturas.length];
 
         int opcion;
         do {
@@ -266,7 +265,7 @@ public class Consola {
 
             // Insertar asignatura en la matrícula
             if (indice != -1) {
-                asignaturasMatricula[indice] = asignatura;
+                asignaturasMatricula[indice] = new Asignatura(asignatura);
                 if (asignaturaYaMatriculada(asignaturasMatricula, asignatura)) {
                     System.out.println();
                     System.out.println("Asignatura añadida.");
@@ -284,9 +283,7 @@ public class Consola {
 
         } while (opcion == 1);
 
-        System.out.println();
-
-        return new Matricula(idMatricula, cursoAcademico, fechaMatriculacion, alumno, asignaturasMatricula);
+        return asignaturasMatricula;
     }
 
     // Obtener una matrícula por identificador

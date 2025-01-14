@@ -84,7 +84,7 @@ public class Asignaturas {
         return indice >= capacidad;
     }
 
-    public Asignatura buscar(Asignatura cicloFormativo) {
+    public static Asignatura buscar(Asignatura cicloFormativo) {
         int i;
         boolean encontrado = false;
 
