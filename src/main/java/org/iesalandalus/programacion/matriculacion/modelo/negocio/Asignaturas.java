@@ -84,13 +84,13 @@ public class Asignaturas {
         return indice >= capacidad;
     }
 
-    public static Asignatura buscar(Asignatura cicloFormativo) {
+    public static Asignatura buscar(Asignatura asignatura) {
         int i;
         boolean encontrado = false;
 
         for(i = 0; i < capacidad && !encontrado; i++)
         {
-            if (coleccionAsignaturas[i] != null && coleccionAsignaturas[i].equals(cicloFormativo)) {
+            if (coleccionAsignaturas[i] != null && coleccionAsignaturas[i].equals(asignatura)) {
                 encontrado = true;
             }
         }

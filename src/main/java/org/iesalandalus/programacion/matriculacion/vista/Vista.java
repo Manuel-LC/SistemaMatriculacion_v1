@@ -12,13 +12,13 @@ import java.time.LocalDate;
 
 public class Vista {
 
-    private Controlador controlador;
+    private static Controlador controlador;
 
     public void setControlador(Controlador controlador) {
         if (controlador == null) {
             throw new NullPointerException("ERROR: El controlador no puede ser nulo.");
         }
-        this.controlador = controlador;
+        Vista.controlador = controlador;
     }
 
     public void comenzar() {
@@ -35,13 +35,12 @@ public class Vista {
             }
         } while (opcion != Opcion.SALIR);
 
-        System.out.println("Hasta luego!!!!");
-
         controlador.terminar();
     }
 
     public void terminar() {
-        System.out.println("Vista terminada.");
+        System.out.println("Hasta luego!!!!");
+        System.out.println();
     }
 
     private void ejecutarOpcion(Opcion opcion) throws OperationNotSupportedException {
@@ -68,13 +67,14 @@ public class Vista {
         }
     }
 
-    private void insertarAlumno() {
+    private static void insertarAlumno() {
         try {
             System.out.println();
             System.out.println("Datos del alumno");
             System.out.println("=============================================================================================");
             Alumno alumno = Consola.leerAlumno();
             controlador.insertar(alumno);
+            System.out.println();
             System.out.println("Alumno insertado correctamente.");
         }
         catch (Exception e) {
@@ -82,7 +82,7 @@ public class Vista {
         }
     }
 
-    private void buscarAlumno() {
+    private static void buscarAlumno() {
         try {
             Alumno alumno = Consola.getAlumnoPorDni();
             alumno = controlador.buscar(alumno);
@@ -99,7 +99,7 @@ public class Vista {
         }
     }
 
-    private void borrarAlumno() {
+    private static void borrarAlumno() {
         try {
             Alumno alumno = Consola.getAlumnoPorDni();
             controlador.borrar(alumno);
@@ -110,7 +110,7 @@ public class Vista {
         }
     }
 
-    private void mostrarAlumnos() {
+    private static void mostrarAlumnos() {
         Alumno[] listaAlumnos = controlador.getAlumnos();
 
         if (listaAlumnos[0] == null) {
@@ -125,14 +125,18 @@ public class Vista {
         }
     }
 
-    private void insertarAsignatura() {
+    private static void insertarAsignatura() {
         try {
+            System.out.println("Inserción de una asignatura:");
+            System.out.println("=============================================================================================");
+            System.out.println("-- Ciclo formativo de la asignatura --");
             mostrarCiclosFormativos();
+            System.out.println();
             CicloFormativo cicloFormativo = Consola.getCicloFormativoPorCodigo();
             cicloFormativo = controlador.buscar(cicloFormativo);
 
-            System.out.println("Datos de la asignatura");
-            System.out.println("=============================================================================================");
+            System.out.println();
+            System.out.println("-- Datos de la asignatura --");
 
             Asignatura asignatura = Consola.leerAsignatura(new CicloFormativo(cicloFormativo));
             controlador.insertar(asignatura);
@@ -143,7 +147,7 @@ public class Vista {
         }
     }
 
-    private void buscarAsignatura() {
+    private static void buscarAsignatura() {
         try {
             Asignatura asignatura = Consola.getAsignaturaPorCodigo();
             asignatura = controlador.buscar(asignatura);
@@ -161,7 +165,7 @@ public class Vista {
         }
     }
 
-    private void borrarAsignatura() {
+    private static void borrarAsignatura() {
         try {
             Asignatura asignatura = Consola.getAsignaturaPorCodigo();
             controlador.borrar(asignatura);
@@ -173,7 +177,7 @@ public class Vista {
         }
     }
 
-    private void mostrarAsignaturas() {
+    private static void mostrarAsignaturas() {
         Asignatura[] listaAsignaturas = controlador.getAsignaturas();
 
         if (listaAsignaturas[0] == null) {
@@ -188,7 +192,7 @@ public class Vista {
         }
     }
 
-    private void insertarCicloFormativo() {
+    private static void insertarCicloFormativo() {
         try {
             System.out.println("Datos del ciclo formativo");
             System.out.println("=============================================================================================");
@@ -201,7 +205,7 @@ public class Vista {
         }
     }
 
-    private void buscarCicloFormativo() {
+    private static void buscarCicloFormativo() {
         try {
             CicloFormativo cicloFormativo = Consola.getCicloFormativoPorCodigo();
             cicloFormativo = controlador.buscar(cicloFormativo);
@@ -219,7 +223,7 @@ public class Vista {
         }
     }
 
-    private void borrarCicloFormativo() {
+    private static void borrarCicloFormativo() {
         try {
             CicloFormativo cicloFormativo = Consola.getCicloFormativoPorCodigo();
             controlador.borrar(cicloFormativo);
@@ -231,7 +235,7 @@ public class Vista {
         }
     }
 
-    private void mostrarCiclosFormativos() {
+    private static void mostrarCiclosFormativos() {
         CicloFormativo[] listaCiclos = controlador.getCiclosFormativos();
 
         if (listaCiclos[0] == null) {
@@ -246,7 +250,7 @@ public class Vista {
         }
     }
 
-    private void insertarMatricula() {
+    private static void insertarMatricula() {
         try {
             System.out.println("Inserción de una matrícula");
             System.out.println("=============================================================================================");
@@ -269,7 +273,7 @@ public class Vista {
         }
     }
 
-    private void buscarMatricula() {
+    private static void buscarMatricula() {
         try {
             Matricula matricula = Consola.getMatriculaPorIdentificador();
             matricula = controlador.buscar(matricula);
@@ -287,7 +291,7 @@ public class Vista {
         }
     }
 
-    private void anularMatricula() {
+    private static void anularMatricula() {
         try {
             if (controlador.getMatriculas().length == 0) {
                 System.out.println("No hay matrículas registradas para anular.");
@@ -314,7 +318,7 @@ public class Vista {
         }
     }
 
-    private void mostrarMatriculas() throws OperationNotSupportedException {
+    private static void mostrarMatriculas() throws OperationNotSupportedException {
         Matricula[] listaMatriculas = controlador.getMatriculas();
 
         if (listaMatriculas[0] == null) {
@@ -329,7 +333,7 @@ public class Vista {
 
     }
 
-    private void mostrarMatriculasPorAlumno() {
+    private static void mostrarMatriculasPorAlumno() {
         try {
             Alumno alumno = Consola.getAlumnoPorDni();
             alumno = controlador.buscar(alumno);
@@ -355,7 +359,7 @@ public class Vista {
         }
     }
 
-    private void mostrarMatriculasPorCicloFormativo() {
+    private static void mostrarMatriculasPorCicloFormativo() {
         try {
             if (controlador.getMatriculas().length == 0) {
                 System.out.println("No hay ciclos formativos registrados.");
@@ -390,7 +394,7 @@ public class Vista {
         }
     }
 
-    private void mostrarMatriculasPorCursoAcademico() {
+    private static void mostrarMatriculasPorCursoAcademico() {
         try {
             System.out.println("Introduce el curso academico:");
             String cursoAcademico = Entrada.cadena();

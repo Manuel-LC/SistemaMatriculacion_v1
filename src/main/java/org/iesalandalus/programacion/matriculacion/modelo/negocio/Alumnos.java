@@ -77,11 +77,11 @@ public class Alumnos {
     }
 
     private boolean tamanoSuperado(int indice) {
-        return indice > tamano;
+        return indice >= tamano;
     }
 
     private boolean capacidadSuperada(int indice) {
-        return indice > capacidad;
+        return indice >= capacidad;
     }
 
     public Alumno buscar(Alumno alumno) {
